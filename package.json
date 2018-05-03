@@ -1,0 +1,33 @@
+{
+    "name": "Krfss_Editor",
+    "version": "3.0.1",
+    "main": "src/main.js",
+    "author": "小路綾",
+    "description": "A web-based editor of Kirafan_Autosub's .krfss sustitle file",
+    "devDependencies": {},
+    "scripts": {
+        "package": "electron-builder"
+    },
+    "dependencies": {
+        "electron-updater": "^2.21.8",
+        "jquery": "^3.3.1"
+    },
+    "build": {
+        "appId": "moe.kirafan",
+        "productName": "Krfss_Editor",
+        "copyright": "小路綾",
+        "asar": true,
+        "compression": "store",
+        "nsis": {
+            "artifactName": "${productName}-${version}.${ext}"
+        },
+        "win": {
+            "icon": "src/icon.jpg"
+        },
+        "files": [
+            "src/*",
+            "!node_modules/*",
+            "!dist/*"
+        ]
+    }
+}
