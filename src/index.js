@@ -2,7 +2,6 @@ const angluar = require("angular");
 const path = require("path");
 const fs = require("fs");
 const assetsIO = require("./assetsIO.js");
-const ngSanitize = require("angular-sanitize");
 $ = require("jquery");
 
 const app = angular.module("kte", []);
