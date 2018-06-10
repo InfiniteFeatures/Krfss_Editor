@@ -1,20 +1,44 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <link rel="icon" href="icon.jpg" type="image/x-icon">
-        <meta charset="utf-8">
-        <title>Kirara Fantasia Autosub Translation Editor</title>
-        <link rel="stylesheet" type="text/css" href="style.css" media="screen">
-    </head>
-    <body style="width:calc(100% - 20px); text-align: center">
-        <div style="display:inline-block; width: 1334px; text-align:center">
-            <h1>Kirara Fantasia Autosub Translation Editor</h1>
-            <div id="holder" class="holder">
-                Please drag the subtitle file here
+
+<head>
+    <!-- <link rel="icon" href="icon.png" type="image/x-icon"> -->
+    <meta charset="utf-8">
+    <title>Kirafan AutoSub Subtitle File Editor</title>
+    <link rel="stylesheet" type="text/css" href="index.css" media="screen">
+</head>
+
+<body id="body" ng-app="kte" ng-controller="init">
+    <div id="outer">
+        <div id="header">
+            <h2>{{title}}</h2>
+            <div id="holder" class="holder" ng-class="{saver_modified: holder.modified}">
+                {{asset.inited?'Save':holder.msg}}
             </div>
-            <div id="file_indicator" class="file_indicator"></div>
-            <div id="item_container"></div>
+            <div id="file_indicator" class="file_indicator">
+                Workspace:
+                <br>{{asset.filename}}
+            </div>
+        </div>
+        {{asset.items.names}}
+        <div id="item_container">
+            <div class="item" ng-repeat="nmtg_index in asset.data.nmtg_map track by $index">
+                <div class="col2">Original Text
+                    <br>
+                    <img type="text" class="nmtg" src="{{asset.nmtgimg_src(nmtg_index)}}">
+                    <img type="rend" class="text" src="{{asset.textimg_src($index)}}">
+                </div>
+                <div class="col2">{{check(asset.data.trans[$index])?"Error: Max 3 Lines":"Translation"}}
+                    <input type="text" class="nmtg" ng-model="asset.data.nmtgs[nmtg_index]" ng-change="textChange()">
+                    <textarea class="text" ng-trim="false" ng-model="asset.data.trans[$index]" ng-class="{badlength: check(asset.data.trans[$index])}"
+                        ng-change="textChange()">
+                    </textarea>
+                    <pre class="rend" readonly disabled ng-bind-html="escape(asset.data.trans[$index])" ng-class="{rend3lines: is3lines(asset.data.trans[$index])}">
+                    </pre>
+                </div>
+            </div>
         </div>
         <script src="index.js"></script>
-    </body>
+</body>
+
 </html>
