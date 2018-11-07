@@ -61,5 +61,11 @@ typings/
 
 .sw?
 .krfss
+.m
+.muast
+.asset
+.assets
+.unity3d
+.vs/
 
 .DS_Store
