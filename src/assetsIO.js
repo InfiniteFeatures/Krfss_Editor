@@ -52,8 +52,10 @@ class assetsIO {
                 this.data.nmtgs &&
                 this.data.trans &&
                 this.data.nmtg_map &&
-                this.data.timestamp
+                this.data.timestamp &&
+                this.data.total
             ) {
+                this.parse_inline_concat();
                 return true;
             }
         } catch (err) {
@@ -72,6 +74,23 @@ class assetsIO {
         } catch (e) {
             throw e;
             return;
+        }
+    }
+    parse_inline_concat() {
+        this.inline_concat = [];
+        var line_indices = [];
+        for (var ts_index in this.data.timestamp) {
+            const ts = this.data.timestamp[ts_index];
+            switch (ts.action) {
+                case "C":
+                    line_indices = [];
+                    break;
+                case "S":
+                    const sub_index = ts.sub;
+                    line_indices.push(sub_index);
+                    this.inline_concat.push(line_indices.slice());
+                    break;
+            }
         }
     }
 }

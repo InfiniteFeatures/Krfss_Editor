@@ -38,24 +38,47 @@ app.controller("init", [
         };
 
         // Calculated
-        $scope.escape = str => {
-            return $sce.trustAsHtml(
-                str.replace(/(\$[^$]*\$)/g, function(match) {
+        $scope.concat = (trans, indices) => {
+            const _escape = str => {
+                return str.replace(/(\$[^$]*\$)/g, function(match) {
                     return (
                         "<span class='pink'>" + match.slice(1, -1) + "</span>"
                     );
-                })
-            );
+                });
+            };
+            const _grayscale = str => {
+                return (
+                    "<span class='gray'>" +
+                    str.replace(/(\$[^$]*\$)/g, function(match) {
+                        return (
+                            "<span class='pink'>" +
+                            match.slice(1, -1) +
+                            "</span>"
+                        );
+                    }) +
+                    "</span>"
+                );
+            };
+            var ret = "";
+            for (var ii in indices) {
+                const index = indices[ii];
+                const str = trans[index];
+                ret +=
+                    parseInt(ii) + 1 == indices.length
+                        ? _escape(str)
+                        : _grayscale(str);
+            }
+            return $sce.trustAsHtml(ret);
         };
-        $scope.check = item => {
+        $scope.numlines = (trans, indices) => {
+            var item = "";
+            for (var ii in indices) {
+                const index = indices[ii];
+                const str = trans[index];
+                item += str;
+            }
             lines = item.split("\n");
-            if (lines.length > 3) return true;
-            return false;
-        };
-        $scope.is3lines = item => {
-            lines = item.split("\n");
-            if (lines.length == 3) return true;
-            return false;
+            return lines.length;
         };
 
         // Variables

@@ -3,6 +3,23 @@
     src: url("jpfont.otf") format("opentype");
 }
 
+@font-face {
+    font-family: "CNFont";
+    src: url("cnfont.ttf") format("opentype");
+}
+
+@font-face {
+    font-family: "KOFont";
+    src: url("kofont.ttf") format("opentype");
+}
+
+@font-face {
+    font-family: "FBFont";
+    font-weight: bold;
+    font-style: bold oblique;
+    src: url("jpfont.otf") format("opentype");
+}
+
 body {
     font-size: 15px;
     width: calc(100% - 20px);
@@ -74,10 +91,23 @@ div.col2 {
     background: #fffed7;
     margin: 5px;
     color: #663633;
-    font-family: JPFont !important;
     font-variant-ligatures: none;
     white-space: pre;
 }
+
+.jprend {
+    font-family: "JPFont", "FBFont" !important;
+}
+.cnrend {
+    font-family: "CNFont", "FBFont" !important;
+}
+.korend {
+    font-family: "KOFont", "FBFont" !important;
+}
+.enrend {
+    font-family: "JPFont", "FBFont" !important;
+}
+
 .rend3lines {
     line-height: 30px;
 }
@@ -102,6 +132,7 @@ div.col2 {
     margin: 5px;
     text-align: left;
     display: inline-block;
+    font-family: CNFont !important;
     font-size: 18px;
     background: white;
     word-break: break-all;
@@ -192,6 +223,10 @@ img.text {
     transition: 0.3s all ease-in-out;
 }
 
+.warnlength {
+    background-color: yellow;
+}
+
 .badlength {
     background-color: #f77;
     color: dimgray;
@@ -199,4 +234,8 @@ img.text {
 
 .pink {
     color: #ea668e;
+}
+
+.gray {
+    opacity: 0.45 !important;
 }

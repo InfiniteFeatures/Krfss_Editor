@@ -28,12 +28,21 @@
                     <img type="text" class="nmtg" src="{{asset.nmtgimg_src(nmtg_index)}}">
                     <img type="rend" class="text" src="{{asset.textimg_src($index)}}">
                 </div>
-                <div class="col2">{{check(asset.data.trans[$index])?"Error: Max 3 Lines":"Translation"}}
+                <div class="col2">{{numlines(asset.data.trans, asset.inline_concat[$index])>3?"Error: Max 3 Lines":"Translation"}}
                     <input type="text" class="nmtg" ng-model="asset.data.nmtgs[nmtg_index]" ng-change="textChange()">
-                    <textarea class="text" ng-trim="false" ng-model="asset.data.trans[$index]" ng-class="{badlength: check(asset.data.trans[$index])}"
+                    <textarea class="text" ng-trim="false" ng-model="asset.data.trans[$index]"
+                        ng-class="{badlength: numlines(asset.data.trans, asset.inline_concat[$index]) > 3, 
+                            warnlength: numlines(asset.data.trans, asset.inline_concat[$index]) > 2}"
                         ng-change="textChange()">
                     </textarea>
-                    <pre class="rend" readonly disabled ng-bind-html="escape(asset.data.trans[$index])" ng-class="{rend3lines: is3lines(asset.data.trans[$index])}">
+                    <pre class="rend" readonly disabled
+                        ng-bind-html="concat(asset.data.trans, asset.inline_concat[$index])"
+                        ng-class="{rend3lines: numlines(asset.data.trans, asset.inline_concat[$index]) > 2,
+                            jprend: asset.data.lang == 'jp',
+                            cnrend: asset.data.lang == 'cn',
+                            enrend: asset.data.lang == 'en',
+                            korend: asset.data.lang == 'ko'
+                        }">
                     </pre>
                 </div>
             </div>
