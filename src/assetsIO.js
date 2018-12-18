@@ -55,6 +55,7 @@ class assetsIO {
                 this.data.timestamp &&
                 this.data.total
             ) {
+                if (!this.title) this.titlle = "";
                 this.parse_inline_concat();
                 return true;
             }

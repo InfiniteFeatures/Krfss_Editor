@@ -76,6 +76,15 @@ div.col2 {
     background: #fffef3;
 }
 
+div.title {
+    width: 650px;
+    height: 120px;
+    border: solid 1px #777;
+    margin: 12px auto 12px auto;
+    background: #fffef3;
+    text-align: middle;
+}
+
 .rend {
     width: 540px;
     height: 90px;

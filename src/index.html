@@ -22,6 +22,12 @@
         </div>
         {{asset.items.names}}
         <div id="item_container">
+            <div class="title" ng-if="asset.inited">Title
+                <br>
+                <textarea class="text" ng-trim="false" ng-model="asset.data.title"
+                    ng-change="textChange()">
+                </textarea>
+            </div>
             <div class="item" ng-repeat="nmtg_index in asset.data.nmtg_map track by $index">
                 <div class="col2">Original Text
                     <br>
