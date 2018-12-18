@@ -3,6 +3,6 @@
 A Web-based editor of [Kirafan_Autosub](https://github.com/kirafanautodec/Kirafan_AutoSub)
 `.krfss` sustitle file
 
-# Pre-built binary (Windows)
+# Download (下载地址)
 
-[Download from Google Drive](https://drive.google.com/open?id=1HXFKwSCDJ9n_0wQK4liuLitJf7zrzFYa)
+[for Windows](https://drive.google.com/open?id=1w8LCNGop0wOua7gDMMVStWTVjS3m1nHM)
