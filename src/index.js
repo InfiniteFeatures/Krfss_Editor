@@ -1,8 +1,18 @@
-const angluar = require("angular");
+const _angular = require("angular");
 const path = require("path");
 const fs = require("fs");
 const assetsIO = require("./assetsIO.js");
 $ = require("jquery");
+
+var str = {
+    X: "X - Textbox invisible",
+    T: "T - Textbox visible",
+    N: "N - Nametag position changed",
+    S: "S - Line start",
+    E: "E - Line end",
+    C: "C - Text clear",
+    O: "O - End"
+};
 
 const app = angular.module("kte", []);
 app.controller("init", [
@@ -33,8 +43,18 @@ app.controller("init", [
             }
             $scope.$digest();
         };
+        $scope.deleteHandler = (index) => {
+            if ($scope.asset.inited) {
+                $scope.asset.deleteTag(index);
+                $scope.textChange();
+            }
+        };
         $scope.textChange = () => {
             $scope.holder.modified = true;
+        };
+        $scope.frameChange = () => {
+            $scope.asset.sortTS();
+            $scope.textChange();
         };
 
         // Calculated
@@ -93,6 +113,10 @@ app.controller("init", [
             nmtgimg_src: () => "",
             textimg_src: () => ""
         };
+        $scope.options = {
+            adv: true
+        };
+        $scope.strings = str;
 
         window.onbeforeunload = event => {
             $scope.saveHandler();
@@ -140,4 +164,15 @@ $("#holder").on({
             .scope()
             .saveHandler();
     }
+});
+
+$('#item_container').on('scroll', function(e){ 
+    var $el = $('.fixedElement'); 
+    var isPositionFixed = $el.hasClass('lock');
+    if ($(this).scrollTop() > 120 && !isPositionFixed){ 
+        $el.addClass('lock'); 
+    }
+    if ($(this).scrollTop() < 120 && isPositionFixed){
+        $el.removeClass('lock');
+    } 
 });

@@ -1,5 +1,7 @@
+const { Console } = require("console");
 const fs = require("fs");
 const path = require("path");
+
 Number.prototype.pad = function(size) {
     var s = String(this);
     while (s.length < (size || 2)) {
@@ -7,6 +9,7 @@ Number.prototype.pad = function(size) {
     }
     return s;
 };
+
 class assetsIO {
     constructor(filename) {
         this.sizelimit = 114514;
@@ -93,6 +96,12 @@ class assetsIO {
                     break;
             }
         }
+    }
+    sortTS() {
+        this.data.timestamp.sort((a, b) => { return a.at - b.at; });
+    }
+    deleteTag(index) {
+        this.data.timestamp.splice(index, 1);
     }
 }
 

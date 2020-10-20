@@ -22,16 +22,15 @@
 
 body {
     font-size: 15px;
-    width: calc(100% - 20px);
     text-align: center;
-    margin: 0;
+    margin: 0 20px;
     padding: 0;
     font-family: JPFont;
 }
 
 #outer {
     display: inline-block;
-    width: 1334px;
+    width: 100%;
     text-align: center;
     margin: 0;
     padding: 0;
@@ -52,20 +51,21 @@ h2 {
 }
 
 #item_container {
-    height: calc(100vh - 150px - 8px);
+    height: calc(100vh - 120px - 9px);
     overflow: scroll;
     margin: 0;
     padding: 0;
 }
 
 div.item {
-    margin-bottom: 15px;
-    margin-top: 15px;
+    padding-top: 15px;
     padding-bottom: 10px;
     border-bottom: solid 3px #004;
     vertical-align: middle;
     display: flex;
+    justify-content: center;
     flex-direction: row;
+    position: relative;
 }
 
 div.col2 {
@@ -76,13 +76,65 @@ div.col2 {
     background: #fffef3;
 }
 
+div.col1 {
+    width: 350px;
+    height: 240px;
+    border: solid 1px #777;
+    margin: 5px;
+    background: #fffef3;
+}
+
+div.small {
+    width: calc(100% - 20px);
+    max-width: 1675px;
+    border: solid 1px #777;
+    margin: 12px auto 12px auto;
+    background: #fffef3;
+}
+
 div.title {
     width: 650px;
-    height: 120px;
     border: solid 1px #777;
     margin: 12px auto 12px auto;
     background: #fffef3;
     text-align: middle;
+}
+
+.hvrbtn {
+    background-size: contain;
+    position: absolute;
+    border: solid 1px;
+    display: none;
+    cursor: pointer;
+}
+
+.xbutton {
+    background-image: url("img/X_pad.jpg");
+    width: 20px;
+    height: 20px;
+    top: 10px;
+    right: 15px;
+}
+
+.xbutton:hover {
+    top: 9px;
+    right: 14px;
+    border: solid 2px;
+}
+
+.item:hover .hvrbtn {
+    display: block;
+}
+
+.fixedElement.lock {
+    position: fixed;
+    top: 120px;
+    border: solid 1px #777;
+    background: #fffef3;
+    z-index: 10;
+    padding: 0px 6px 0px 3px;
+    left: 50%;
+    transform: translate(calc(-50% - 9px));
 }
 
 .rend {
@@ -123,6 +175,30 @@ div.title {
 
 .nmtg {
     width: 200px;
+    height: 25px;
+    background: #fffed7;
+    padding: 2px;
+    vertical-align: middle;
+    text-align: center;
+    display: inline-block;
+    font-size: 20px;
+    margin: 5px;
+}
+
+.tag {
+    width: 50px;
+    height: 25px;
+    background: #fffed7;
+    padding: 2px;
+    vertical-align: middle;
+    text-align: center;
+    display: inline-block;
+    font-size: 20px;
+    margin: 5px;
+}
+
+.frametag {
+    width: 75px;
     height: 25px;
     background: #fffed7;
     padding: 2px;

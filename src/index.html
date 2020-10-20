@@ -9,6 +9,24 @@
 </head>
 
 <body id="body" ng-app="kte" ng-controller="init">
+    <script type="text/ng-template" id="TagTmpl.html">
+        <div class="small">
+            {{strings[timestamp.action]}}
+            <br>
+            Frame: 
+            <input type="number" class="frametag" min="0" 
+                ng-model="timestamp.at" ng-change="frameChange()">
+            <div ng-if="timestamp.action == 'N'" style="display: inline;">
+                y: 
+                <input type="number" class="tag" min="0" 
+                    ng-model="timestamp.y" ng-change="textChange()">
+                x: 
+                <input type="number" class="tag" min="0" 
+                    ng-model="timestamp.ex" ng-change="textChange()">
+            </div>
+        </div>
+        <div class="hvrbtn xbutton" ng-click="deleteHandler($index)"></div>
+    </script>
     <div id="outer">
         <div id="header">
             <h2>{{title}}</h2>
@@ -27,23 +45,48 @@
                 <textarea class="text" ng-trim="false" ng-model="asset.data.title"
                     ng-change="textChange()">
                 </textarea>
+                <br>
+                <div class="fixedElement">
+                    <input type="checkbox" ng-model="options.adv">
+                    <span>Show advanced options</span>
+                </div>
             </div>
-            <div class="item" ng-repeat="nmtg_index in asset.data.nmtg_map track by $index">
+            <div ng-repeat="timestamp in asset.data.timestamp">
+                <div ng-switch="timestamp.action">
+                    <div ng-switch-when="X|T|N|E|C|O" ng-switch-when-separator="|" ng-if="options.adv">
+                        <div class="item" ng-include src="'TagTmpl.html'" ng></div>
+                    </div>
+                    <div class="item" ng-switch-when="S">
+                        <div class="col1" ng-if="options.adv">
+                            {{strings[timestamp.action]}}
+                            <br>
+                            Frame: 
+                            <input type="number" class="frametag" min="0"
+                                ng-model="timestamp.at" ng-change="frameChange()">
+                            <br>
+                            Nametag: 
+                            <input type="number" class="tag" min="0" max="{{asset.data.nmtgs.length-1}}"
+                                    ng-model="asset.data.nmtg_map[timestamp.sub]" ng-change="textChange()">
+                            <br>
+                            Line: 
+                            <input type="number" class="tag" min="0" max="{{asset.data.trans.length-1}}"
+                                    ng-model="timestamp.sub" ng-change="textChange()">
+                        </div>
                 <div class="col2">Original Text
                     <br>
-                    <img type="text" class="nmtg" src="{{asset.nmtgimg_src(nmtg_index)}}">
-                    <img type="rend" class="text" src="{{asset.textimg_src($index)}}">
+                            <img type="text" class="nmtg" src="{{asset.nmtgimg_src(asset.data.nmtg_map[timestamp.sub])}}">
+                            <img type="rend" class="text" src="{{asset.textimg_src(timestamp.sub)}}" alt="No image for line {{timestamp.sub}}">
                 </div>
-                <div class="col2">{{numlines(asset.data.trans, asset.inline_concat[$index])>3?"Error: Max 3 Lines":"Translation"}}
-                    <input type="text" class="nmtg" ng-model="asset.data.nmtgs[nmtg_index]" ng-change="textChange()">
-                    <textarea class="text" ng-trim="false" ng-model="asset.data.trans[$index]"
-                        ng-class="{badlength: numlines(asset.data.trans, asset.inline_concat[$index]) > 3, 
-                            warnlength: numlines(asset.data.trans, asset.inline_concat[$index]) > 2}"
+                        <div class="col2">{{numlines(asset.data.trans, asset.inline_concat[timestamp.sub])>3?"Error: Max 3 Lines":"Translation"}}
+                            <input type="text" class="nmtg" ng-model="asset.data.nmtgs[asset.data.nmtg_map[timestamp.sub]]" ng-change="textChange()">
+                            <textarea class="text" ng-trim="false" ng-model="asset.data.trans[timestamp.sub]"
+                                ng-class="{badlength: numlines($index) > 3, 
+                                    warnlength: numlines($index) > 2}"
                         ng-change="textChange()">
                     </textarea>
                     <pre class="rend" readonly disabled
-                        ng-bind-html="concat(asset.data.trans, asset.inline_concat[$index])"
-                        ng-class="{rend3lines: numlines(asset.data.trans, asset.inline_concat[$index]) > 2,
+                                ng-bind-html="concat($index)"
+                                ng-class="{rend3lines: numlines($index) > 2,
                             jprend: asset.data.lang == 'jp',
                             cnrend: asset.data.lang == 'cn',
                             enrend: asset.data.lang == 'en',
@@ -51,9 +94,13 @@
                         }">
                     </pre>
                 </div>
+                        <div class="hvrbtn xbutton" ng-click="deleteHandler($index)" ng-if="options.adv"></div>
+                    </div>
+                </div>
             </div>
         </div>
         <script src="index.js"></script>
+    </div>
 </body>
 
 </html>
