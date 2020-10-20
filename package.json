@@ -24,7 +24,7 @@
         "asar": true,
         "compression": "store",
         "nsis": {
-            "artifactName": "${productName}-${version}.${ext}"
+            "artifactName": "${productName}_v${version}.${ext}"
         },
         "win": {
             "icon": "src/img/icon.png"
