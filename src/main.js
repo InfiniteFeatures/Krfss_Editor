@@ -25,8 +25,13 @@ function isDev() {
 
 function createWindow() {
     mainWindow = new BrowserWindow({
-        width: 1400,
-        height: 700
+        width: 1600,
+        height: 900,
+        minWidth: 1440,
+		webPreferences: {
+            nodeIntegration: true,
+            spellcheck: false
+		}
     });
     mainWindow.loadURL(
         url.format({
