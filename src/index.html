@@ -9,6 +9,23 @@
 </head>
 
 <body id="body" ng-app="kte" ng-controller="init">
+    <script type="text/ng-template" id="ModalContent.html">
+        <div class="modal-header">
+            <h3 class="modal-title" id="modal-title">Insert a new tag</h3>
+        </div>
+        <div class="modal-body" id="modal-body">
+            <button ng-click="create('X')">{{strings.X}}</button><br>
+            <button ng-click="create('T')">{{strings.T}}</button><br>
+            <button ng-click="create('N')">{{strings.N}}</button><br>
+            <button ng-click="create('S')">{{strings.S}}</button><br>
+            <button ng-click="create('E')">{{strings.E}}</button><br>
+            <button ng-click="create('C')">{{strings.C}}</button><br>
+            <button ng-click="create('O')">{{strings.O}}</button>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
     <script type="text/ng-template" id="TagTmpl.html">
         <div class="small">
             {{strings[timestamp.action]}}
@@ -26,6 +43,8 @@
             </div>
         </div>
         <div class="hvrbtn xbutton" ng-click="deleteHandler($index)"></div>
+        <div class="hvrbtn addbuttontop" ng-click="openModal($index, true)"></div>
+        <div class="hvrbtn addbuttonbot" ng-click="openModal($index+1, false)"></div>
     </script>
     <div id="outer">
         <div id="header">
@@ -71,30 +90,34 @@
                             Line: 
                             <input type="number" class="tag" min="0" max="{{asset.data.trans.length-1}}"
                                     ng-model="timestamp.sub" ng-change="textChange()">
+                            <br>
+                            <button ng-click="addLineHandler($index)">Add new line</button>
                         </div>
-                <div class="col2">Original Text
-                    <br>
+                        <div class="col2">Original Text
+                            <br>
                             <img type="text" class="nmtg" src="{{asset.nmtgimg_src(asset.data.nmtg_map[timestamp.sub])}}">
                             <img type="rend" class="text" src="{{asset.textimg_src(timestamp.sub)}}" alt="No image for line {{timestamp.sub}}">
-                </div>
+                        </div>
                         <div class="col2">{{numlines(asset.data.trans, asset.inline_concat[timestamp.sub])>3?"Error: Max 3 Lines":"Translation"}}
                             <input type="text" class="nmtg" ng-model="asset.data.nmtgs[asset.data.nmtg_map[timestamp.sub]]" ng-change="textChange()">
                             <textarea class="text" ng-trim="false" ng-model="asset.data.trans[timestamp.sub]"
                                 ng-class="{badlength: numlines($index) > 3, 
                                     warnlength: numlines($index) > 2}"
-                        ng-change="textChange()">
-                    </textarea>
-                    <pre class="rend" readonly disabled
+                                ng-change="textChange()">
+                            </textarea>
+                            <pre class="rend" readonly disabled
                                 ng-bind-html="concat($index)"
                                 ng-class="{rend3lines: numlines($index) > 2,
-                            jprend: asset.data.lang == 'jp',
-                            cnrend: asset.data.lang == 'cn',
-                            enrend: asset.data.lang == 'en',
-                            korend: asset.data.lang == 'ko'
-                        }">
-                    </pre>
-                </div>
+                                    jprend: asset.data.lang == 'jp',
+                                    cnrend: asset.data.lang == 'cn',
+                                    enrend: asset.data.lang == 'en',
+                                    korend: asset.data.lang == 'ko'
+                                }">
+                            </pre>
+                        </div>
                         <div class="hvrbtn xbutton" ng-click="deleteHandler($index)" ng-if="options.adv"></div>
+                        <div class="hvrbtn addbuttontop" ng-click="openModal($index, true)" ng-if="options.adv"></div>
+                        <div class="hvrbtn addbuttonbot" ng-click="openModal($index+1, false)" ng-if="options.adv"></div>
                     </div>
                 </div>
             </div>

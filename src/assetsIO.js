@@ -58,8 +58,7 @@ class assetsIO {
                 this.data.timestamp &&
                 this.data.total
             ) {
-                if (!this.title) this.titlle = "";
-                this.parse_inline_concat();
+                if (!this.title) this.title = "";
                 return true;
             }
         } catch (err) {
@@ -80,28 +79,64 @@ class assetsIO {
             return;
         }
     }
-    parse_inline_concat() {
-        this.inline_concat = [];
+    parse_inline_concat(index) {
         var line_indices = [];
-        for (var ts_index in this.data.timestamp) {
+        for (let ts_index = index; ts_index >= 0; ts_index--) {
             const ts = this.data.timestamp[ts_index];
             switch (ts.action) {
                 case "C":
-                    line_indices = [];
-                    break;
+                    return line_indices;
                 case "S":
                     const sub_index = ts.sub;
-                    line_indices.push(sub_index);
-                    this.inline_concat.push(line_indices.slice());
+                    line_indices.unshift(sub_index);
                     break;
             }
         }
+        return line_indices;
     }
     sortTS() {
         this.data.timestamp.sort((a, b) => { return a.at - b.at; });
     }
     deleteTag(index) {
         this.data.timestamp.splice(index, 1);
+    }
+    insertTag(index, type, before) {
+        var newTag;
+        var frame = this.data.timestamp[(before?index:index-1)].at;
+        switch (type) {
+            case 'N':
+                newTag = {
+                    at: frame,
+                    action: type,
+                    y: 0,
+                    ex: 0
+                }
+                break;
+            case 'S':
+                newTag = {
+                    at: frame,
+                    action: type,
+                    sub: 0
+                }
+                break;
+            case 'X':
+            case 'T':
+            case 'E':
+            case 'C':
+            case 'O':
+            default:
+                newTag = {
+                    at: frame,
+                    action: type
+                }
+                break;
+        }
+        this.data.timestamp.splice(index, 0, newTag);
+    }
+    addLine(index) {
+        this.data.trans.push("");
+        this.data.nmtg_map.push(0);
+        this.data.timestamp[index].sub = this.data.trans.length - 1;
     }
 }
 
